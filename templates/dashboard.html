@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>HR Dashboard</title>
+
+<link rel="stylesheet" href="/static/style.css">
+
+</head>
+
+<body>
+
+<div class="login-box">
+
+<img src="/static/logo.png" class="logo">
+
+<h1>ABC Technologies</h1>
+
+<h3>HR AI Recruitment Agent</h3>
+
+<hr>
+
+<button onclick="location.href='/docs#/default/upload_resumes_upload_resumes_post'">
+📤 Upload Resumes
+</button>
+
+<button onclick="location.href='/docs#/default/top_candidates_top_candidates_get'">
+👥 Top Candidates
+</button>
+
+<button onclick="location.href='/docs#/default/dashboard_dashboard_get'">
+📊 Dashboard
+</button>
+
+<button onclick="location.href='/docs#/default/export_excel_api_export_excel_get'">
+📄 Export Excel
+</button>
+
+<button onclick="logout()">
+🚪 Logout
+</button>
+
+</div>
+
+<script>
+
+const token = localStorage.getItem("token");
+
+if(!token){
+
+window.location.href="/";
+
+}
+
+function logout(){
+
+localStorage.removeItem("token");
+
+window.location.href="/";
+
+}
+
+</script>
+
+</body>
+
+</html>
