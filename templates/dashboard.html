@@ -2,11 +2,8 @@
 <html lang="en">
 
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>HR Dashboard</title>
 
 <link rel="stylesheet" href="/static/style.css">
@@ -19,25 +16,33 @@
 
 <img src="/static/logo.png" class="logo">
 
-<h1>ABC Technologies</h1>
-
+<h1>RS Technologies</h1>
 <h3>HR AI Recruitment Agent</h3>
 
 <hr>
 
-<button onclick="location.href='/docs#/default/upload_resumes_upload_resumes_post'">
+<!-- Hidden File Input -->
+<input
+    type="file"
+    id="resumeFiles"
+    multiple
+    accept=".pdf,.doc,.docx"
+    style="display:none"
+    onchange="uploadResumes(this.files)">
+
+<button onclick="document.getElementById('resumeFiles').click()">
 📤 Upload Resumes
 </button>
 
-<button onclick="location.href='/docs#/default/top_candidates_top_candidates_get'">
+<button onclick="location.href='/top-candidates'">
 👥 Top Candidates
 </button>
 
-<button onclick="location.href='/docs#/default/dashboard_dashboard_get'">
+<button onclick="location.href='/dashboard'">
 📊 Dashboard
 </button>
 
-<button onclick="location.href='/docs#/default/export_excel_api_export_excel_get'">
+<button onclick="window.location='/export-excel'">
 📄 Export Excel
 </button>
 
@@ -52,17 +57,30 @@
 const token = localStorage.getItem("token");
 
 if(!token){
-
-window.location.href="/";
-
+    window.location.href="/";
 }
 
 function logout(){
+    localStorage.removeItem("token");
+    window.location.href="/";
+}
 
-localStorage.removeItem("token");
+async function uploadResumes(files){
 
-window.location.href="/";
+    const formData = new FormData();
 
+    for(let i=0;i<files.length;i++){
+        formData.append("files", files[i]);
+    }
+
+    const response = await fetch("/upload-resumes",{
+        method:"POST",
+        body:formData
+    });
+
+    const result = await response.json();
+
+    alert(result.message);
 }
 
 </script>

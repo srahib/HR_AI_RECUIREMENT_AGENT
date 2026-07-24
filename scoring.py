@@ -52,10 +52,10 @@ def calculate_score(candidate):
 
 def get_recommendation(score):
 
-    if score >= 80:
+    if score >= 50:
         return "Selected"
 
-    elif score >= 60:
+    elif score >= 30:
         return "Interview"
 
     else:

@@ -1,5 +1,7 @@
 from fastapi import FastAPI, UploadFile, File
 from typing import List
+from fastapi.responses import FileResponse
+import glob
 import os
 from database import engine
 from models import Base
@@ -72,6 +74,16 @@ async def upload_resumes(
     global resumes_data
 
     resumes_data.clear()
+    for file_path in glob.glob(os.path.join(UPLOAD_FOLDER, "*")):
+        try:
+            os.remove(file_path)
+        except Exception:
+            pass
+    for file_path in glob.glob(os.path.join(REPORT_FOLDER, "*.xlsx")):
+        try:
+            os.remove(file_path)
+        except Exception:
+            pass
 
     uploaded = []
 
@@ -248,15 +260,11 @@ def export_excel_api():
         JOB_TITLE
     )
 
-    return {
-        "message": "Excel Generated Successfully",
-        "organization": ORGANIZATION_NAME,
-        "job_title": JOB_TITLE,
-        "records": len(top10),
-        "file": filename
-    }
-
-
+    return FileResponse(
+        path=filename,
+        filename=os.path.basename(filename),
+        media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
 # -----------------------------
 # EXPORT SUMMARY
 # -----------------------------
