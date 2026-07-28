@@ -29,7 +29,6 @@ from excel_export import export_excel
 # -----------------------------
 # APP
 # -----------------------------
-from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles 
 from fastapi.templating import Jinja2Templates
 from auth import router as auth_router
